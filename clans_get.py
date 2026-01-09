@@ -4,6 +4,7 @@ import json
 from datetime import datetime
 
 API_TOKEN = ""
+
 BASE_URL = "https://api.clashofclans.com/v1"
 
 HEADERS = {
