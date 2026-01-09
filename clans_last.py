@@ -71,7 +71,6 @@ def analyze_final_rankings_and_show_chart(excel_file="cwl_our_clan_only.xlsx"):
 
     plt.tight_layout()
 
-    # --- 关键修改 3: 直接显示 ---
     print("正在显示最终综合排名图表...")
     plt.show()
 
