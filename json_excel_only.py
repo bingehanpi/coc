@@ -10,11 +10,16 @@ def extract_our_clan_data(cwl_data, clan_tag):
     player_name_map = {}
 
     for war_tag, war in cwl_data.items():
-        # 确保我们只筛选本部落的数据
-        if war["clan"]["tag"] != clan_tag:
+
+        # 关键修复：识别我们在哪一侧
+        if war["clan"]["tag"] == clan_tag:
+            our_side = "clan"
+        elif war["opponent"]["tag"] == clan_tag:
+            our_side = "opponent"
+        else:
             continue
 
-        clan = war["clan"]
+        clan = war[our_side]
 
         # 记录我们部落的成员和玩家名称
         for m in clan["members"]:
