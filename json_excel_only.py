@@ -1,5 +1,9 @@
+import os
 from openpyxl import Workbook
+from dotenv import load_dotenv
 import json_excel_raw
+
+load_dotenv()
 
 
 def extract_our_clan_data(cwl_data, clan_tag):
@@ -103,7 +107,7 @@ def export_our_clan_excel(members, attacks, defenses,
     print(f"已生成我方专用数据文件: {output_file}")
 
 if __name__ == "__main__":
-    clan_tag = "#2QL2JYJYC"
+    clan_tag = os.getenv("COC_CLAN_TAG")
     json_file = json_excel_raw.find_latest_cwl_json()
     cwl_data = json_excel_raw.load_cwl_json(json_file)
 

@@ -1,9 +1,12 @@
+import os
 import requests
 import time
 import json
 from datetime import datetime
+from dotenv import load_dotenv
 
-API_TOKEN = ""
+load_dotenv()
+API_TOKEN = os.getenv("COC_API_TOKEN")
 
 BASE_URL = "https://api.clashofclans.com/v1"
 
@@ -50,10 +53,27 @@ def save_cwl_raw(wars, clan_tag):
         json.dump(wars, f, ensure_ascii=False, indent=2)
 
     print(f"Saved CWL raw data to: {filename}")
+    cleanup_old_cwl_json(keep=2)
+
+
+def cleanup_old_cwl_json(prefix="cwl_raw_", suffix=".json", keep=2):
+    files = [
+        f for f in os.listdir(".")
+        if f.startswith(prefix) and f.endswith(suffix)
+    ]
+
+    files.sort()
+
+    if len(files) <= keep:
+        return
+
+    for old_file in files[:-keep]:
+        os.remove(old_file)
+        print(f"已清理旧文件: {old_file}")
 
 
 if __name__ == "__main__":
-    CLAN_TAG = "#2QL2JYJYC"
+    CLAN_TAG = os.getenv("COC_CLAN_TAG")
 
     war_tags = get_cwl_war_tags(CLAN_TAG)
     wars = fetch_all_cwl_wars(war_tags)

@@ -1,7 +1,9 @@
+import os
 import requests
+from dotenv import load_dotenv
 
-# 1. 填入你的 Token
-API_TOKEN = ""
+load_dotenv()
+API_TOKEN = os.getenv("COC_API_TOKEN")
 
 def test_auth():
     url = "https://api.clashofclans.com/v1/ip"  # 这个接口可以用来测试鉴权
